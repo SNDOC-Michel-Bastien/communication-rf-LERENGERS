@@ -20,12 +20,10 @@
 #define Rx_Pin 16  // GPIO16 comme RX
 #define Baud_Moniteur 9600  //Vitesse du moniteur series
 #define Baud_Transmition 200  //vitesse de transmition
-#define VITESSE_ENVOI 3000
 
 //#define RECEPTEUR
 
 String SERRE_ID="1" ;           // ID de la serre
-String TRAME_NUM="150" ;       // Numéro de la trame
 
 void setup() 
 {
@@ -37,12 +35,10 @@ void setup()
 #ifdef RECEPTEUR 
 void loop() {
   afficherTrame();
-  delay(VITESSE_ENVOI);
 }
 #else
 void loop() {
-  envoyerTrame(SERRE_ID, TRAME_NUM, capteurTemperature(), capteurHumidite());
-  delay(VITESSE_ENVOI);
+  envoyerTrame(SERRE_ID, capteurTemperature(), capteurHumidite());
 }
 #endif
 

@@ -6,6 +6,8 @@
 #define DHTPIN 4        // GPIO utilisé pour le DHT22
 #define DHTTYPE DHT22   // Type du capteur
 
+int NUMTRAME=0;
+
 DHT dht(DHTPIN, DHTTYPE);
 
 HardwareSerial mySerial(2);  // UART2 sur l'ESP32
@@ -30,8 +32,8 @@ void afficherTrame(){
   if (mySerial.available()) 
   {  
      String trame = mySerial.readStringUntil('\n');  // Lire une ligne complète
-     String contenu = trame.substring(2, trame.length() - 3);  // Extraire les données sans STX/ETX
-     Serial.println("Trame recu : " + contenu);
+     String contenu = trame.substring(1, trame.length() - 2);
+     Serial.println(contenu);
   }
 }
 
@@ -47,9 +49,21 @@ float capteurHumidite()
   return humidite;
 }
 
-void envoyerTrame(String SERRE_ID, String TRAME_NUM, float TEMPERATURE, float HUMIDITE)
-{
-  String TRAME = "SERRE;" + String(SERRE_ID) + ";" + String(TRAME_NUM) + ";" + String(TEMPERATURE) + ";C;" + String(HUMIDITE) + ";%";
-  mySerial.print(TRAME);  // Envoi via UART
-  Serial.println("Trame envoyée : " + TRAME);  // Debug via USB
+void envoyerTrame(String SERRE_ID, float TEMPERATURE, float HUMIDITE)
+{ 
+
+  if (NUMTRAME > 360) 
+  {
+    NUMTRAME = 0;
+  }
+
+  String data = "SERRE" + String(SERRE_ID) + ";" + (NUMTRAME) + ";" + String(TEMPERATURE) + "°C;" + String(HUMIDITE) + "%";
+  String trame = "\x02" + data + "\x03\r\n";  // Construction de la trame
+
+  mySerial.print(trame);
+  Serial.println(trame);
+
+  NUMTRAME++;
+
+  delay(1000);  // Pause 1s
 }
