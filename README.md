@@ -12,7 +12,7 @@
 
 <img src="images/AzD1R32.jpg" height="100" width="100">
 
-- Un [module RF](https://www.twinschip.com/RF_Wireless_433Mhz) émission et réception 433Mz <img src="images/image-removebg-preview.png" height="50" width="50">
+- Un [module RF](https://www.twinschip.com/RF_Wireless_433Mhz) émission et réception 433Mz <img src="images/image-removebg-preview.png" height="50" width="100">
 
 ---
 
