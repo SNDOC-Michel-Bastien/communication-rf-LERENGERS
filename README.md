@@ -2,19 +2,17 @@
 
 # tp-gestionIO
 
-**Objectifs :** 	On désire piloter un ensemble de 6 à 8 dels traversantes lors d’un appui sur un bouton poussoir nommé BP1. Chaque appui allume une del et éteint la précédente.
+**Objectifs :** 	On désire faire communiquer un ESP32 avec un capteur d'humidité et de température, et un autre ESP32 via une communication sans fil et un affichage sur Node Red.
 
 ---
 
 ## Nomenclature
 
-- une carte Az-Delivery [D1 R32](https://www.az-delivery.de/fr/products/esp32-d1-r32-board)
+- Deux carte Az-Delivery [D1 R32](https://www.az-delivery.de/fr/products/esp32-d1-r32-board)
 
 <img src="images/AzD1R32.jpg" height="100" width="100">
 
-- de 6 à 8 DELs <img src="images/led_rouge.png" height="50" width="50">
-
-- un bouton poussoir <img src="images/bp.png" height="50" width="50">
+- Un module RF émission et réception 433Mz <img src="" height="50" width="50">
 
 ---
 
@@ -27,6 +25,17 @@ Le fichier de projet `platformio.ini` :
 platform = espressif32
 board = esp32dev
 framework = arduino
+lib_deps =
+  # RECOMMENDED
+  # Accept new functionality in a backwards compatible manner and patches
+  adafruit/DHT sensor library @ ^1.4.6
+
+  # Accept only backwards compatible bug fixes
+  # (any version with the same major and minor versions, and an equal or greater patch version)
+  adafruit/DHT sensor library @ ~1.4.6
+
+  # The exact version
+  adafruit/DHT sensor library @ 1.4.6
 ```
 Le fichier `src/main.cpp` initial :
 
@@ -57,5 +66,5 @@ void loop() {
 
 ```
 
-&copy; 2024 LICENCE SN-DOC Lasalle Avignon - J.BEAUMONT
+&copy; 2024 LICENCE SN-DOC Lasalle Avignon - B.MICHEL
 
